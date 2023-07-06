@@ -1,0 +1,25 @@
+<launch>
+
+  <arg name="launch_prefix" default="" /> <!--set to value="gdbserver localhost:10000" for remote debugging-->
+  <arg name="node_namespace" default="artag_nav_commander" />
+  <arg name="image_load_path" default="/home/devcyclair/noetic_ws/src/apriltag_ros/apriltag_ros/ar_tags/ar_webcam.png"/> <!--  load image for analysis -->
+  <arg name="image_save_path" default="ar_tag_1_ros.jpg"/>
+
+  <!-- Set parameters -->
+  <rosparam command="load" file="$(find artag_nav_commander)/config/settings.yaml" ns="$(arg node_namespace)" />
+  <rosparam command="load" file="$(find artag_nav_commander)/config/tags.yaml" ns="$(arg node_namespace)" />
+
+  <node pkg="artag_nav_commander" type="artag_nav_commander_node" name="$(arg node_namespace)" clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)" >
+
+    <param name="image_load_path" type="str" value="$(arg image_load_path)" />
+    <param name="image_save_path" type="str" value="$(arg image_save_path)" />
+
+    <!-- Camera intrinsic parameters -->
+    <param name="fx" type="double" value="643.651478" />
+    <param name="fy" type="double" value="644.265346" />
+    <param name="cx" type="double" value="304.4428" />
+    <param name="cy" type="double" value="226.340608" />
+
+  </node>
+
+</launch>
